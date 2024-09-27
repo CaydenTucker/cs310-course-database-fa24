@@ -27,7 +27,14 @@ public class RegistrationDAO {
             
             if (conn.isValid(0)) {
                 
-                // INSERT YOUR CODE HERE
+                String sql = "INSERT INTO REGISTRATIONS (studentid, termid, crn) VALUES (?, ?, ?)";
+                ps = conn.prepareStatement(sql);
+                ps.setInt(1, studentid);
+                ps.setInt(2, termid);
+                ps.setInt(3, crn);
+                
+                int affectedRows = ps.executeUpdate();
+                result = affectedRows > 0;
                 
             }
             

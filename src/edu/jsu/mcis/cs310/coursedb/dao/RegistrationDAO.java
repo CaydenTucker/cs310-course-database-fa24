@@ -34,7 +34,7 @@ public class RegistrationDAO {
                 ps.setInt(3, crn);
                 
                 int affectedRows = ps.executeUpdate();
-                result = affectedRows > 0;
+                result = (affectedRows > 0);
                 
             }
             
@@ -72,7 +72,7 @@ public class RegistrationDAO {
                 ps.setInt(3, crn);
                 
                 int affectedRows = ps.executeUpdate();
-                result = affectedRows > 0;
+                result = (affectedRows > 0);
                 
             }
             
@@ -102,8 +102,13 @@ public class RegistrationDAO {
             
             if (conn.isValid(0)) {
                 
-                // INSERT YOUR CODE HERE
+                String sql = "DELETE FROM registrations WHERE studentid = ? AND termid = ?";
+                ps = conn.prepareStatement(sql);
+                ps.setInt(1, studentid);
+                ps.setInt(2, termid);
                 
+                int rowsAffected = ps.executeUpdate();
+                result = (rowsAffected > 0);
             }
             
         }
@@ -134,7 +139,22 @@ public class RegistrationDAO {
             
             if (conn.isValid(0)) {
                 
-                // INSERT YOUR CODE HERE
+                String sql = "SELECT * FROM registrations WHERE studentid = ? AND termid = ?";
+                ps = conn.prepareStatement(sql);
+                ps.setInt(1, studentid);
+                ps.setInt(2, termid);
+                
+                rs = ps.executeQuery();
+                ResultSetMetaData rsmd = rs.getMetaData();
+                int columnCount = rsmd.getColumnCount();
+                
+                while (rs.next()){
+                    for (int i = 1; i <= columnCount; i++){
+                        result.append(rsmd.getColumnName(i)).append(": ").append(rs.getString(i)).append(", ");
+                    }
+                    
+                    result.append("\n");
+                }
                 
             }
             

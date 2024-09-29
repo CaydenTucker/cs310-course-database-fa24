@@ -48,12 +48,12 @@ public class SectionDAO {
                     JsonObject sectionObj = new JsonObject();
                     
                     for (int i = 1; i <= columnCount; i++){
-                        String columName = rsmd.getColumnName(i);
+                        String columnName = rsmd.getColumnName(i);
                         Object value = rs.getObject(i);
                         sectionObj.put(columnName, value);
                     }
                     
-                    sectionsArray.put(sectionObj);
+                    sectionsArray.add(sectionObj);
                 }
                 
                 result = sectionsArray.toString();

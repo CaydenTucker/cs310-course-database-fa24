@@ -127,7 +127,7 @@ public class RegistrationDAO {
 
     public String list(int studentid, int termid) {
         
-        String result = null;
+        StringBuilder result = new StringBuilder();
         
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -145,16 +145,19 @@ public class RegistrationDAO {
                 ps.setInt(2, termid);
                 
                 rs = ps.executeQuery();
-                ResultSetMetaData rsmd = rs.getMetaData();
+                rsmd = rs.getMetaData();
                 int columnCount = rsmd.getColumnCount();
                 
                 while (rs.next()){
-                    for (int i = 1; i <= columnCount; i++){
-                        result.append(rsmd.getColumnName(i)).append(": ").append(rs.getString(i)).append(", ");
+                    for (int i = 1; i <= columnCount; i++) {
+                        result.append(rsmd.getColumnName(i))
+                                .append(": ")
+                                .append(rs.getString(i))
+                                .append(", ");
                     }
-                    
                     result.append("\n");
                 }
+                
                 
             }
             
@@ -169,7 +172,7 @@ public class RegistrationDAO {
             
         }
         
-        return result;
+        return result.toString();
         
     }
     

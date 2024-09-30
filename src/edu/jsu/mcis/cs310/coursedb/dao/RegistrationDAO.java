@@ -75,9 +75,7 @@ public class RegistrationDAO {
                 ps.setInt(2, termid);
                 ps.setInt(3, crn);
                 
-                int affectedRows = ps.executeUpdate();
-                result = (affectedRows > 0);
-                
+                result = ps.executeUpdate() > 0; 
             }
             
         }
@@ -111,8 +109,7 @@ public class RegistrationDAO {
                 ps.setInt(1, studentid);
                 ps.setInt(2, termid);
                 
-                int rowsAffected = ps.executeUpdate();
-                result = (rowsAffected > 0);
+                result = ps.executeUpdate() > 0;
             }
             
         }
@@ -150,20 +147,10 @@ public class RegistrationDAO {
                 ps.setInt(2, termid);
                 
                 rs = ps.executeQuery();
-                //rsmd = rs.getMetaData();
+                
                 
                 result = DAOUtility.getResultSetAsJson(rs);
-                //int columnCount = rsmd.getColumnCount();
-                
-                /*while (rs.next()){
-                    for (int i = 1; i <= columnCount; i++) {
-                        result.append(rsmd.getColumnName(i))
-                                .append(": ")
-                                .append(rs.getString(i))
-                                .append(", ");
-                    }
-                    result.append("\n");
-                }*/
+               
                 
                 
             }

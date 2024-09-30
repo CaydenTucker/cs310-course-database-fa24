@@ -37,24 +37,6 @@ public class SectionDAO {
                 
                 rs = ps.executeQuery();
                 
-                //JsonArray sectionsArray = new JsonArray();
-                
-                //rsmd = rs.getMetaData();
-                //int columnCount = rsmd.getColumnCount();
-                
-                /*while (rs.next()){
-                    
-                    JsonObject sectionObj = new JsonObject();
-                    
-                    for (int i = 1; i <= columnCount; i++){
-                        String columnName = rsmd.getColumnName(i);
-                        Object value = rs.getObject(i);
-                        sectionObj.put(columnName, value);
-                    }
-                    
-                    sectionsArray.add(sectionObj);
-                }*/
-                
                 result = DAOUtility.getResultSetAsJson(rs);
                 
             }

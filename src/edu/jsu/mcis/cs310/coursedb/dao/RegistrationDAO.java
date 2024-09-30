@@ -10,10 +10,7 @@ public class RegistrationDAO {
     
     private final DAOFactory daoFactory;
     
-    private static final String QUERY_REGISTAR = "INSERT INTO REGISTRATIONS (studentid, termid, crn) VALUES (?, ?, ?)";
-    private static final String QUERY_DROP = "DELETE FROM refistrations WHERE studentid = ? AND termid = ? AND crn = ?";
-    private static final String QUARY_WITHDRAW = "DELETE FROM registrations WHERE studentid = ? AND termid = ?";
-    private static final String QUERY_LISTING = "SELECT * FROM registrations WHERE studentid = ? AND termid = ?";
+    
     
     RegistrationDAO(DAOFactory daoFactory) {
         this.daoFactory = daoFactory;
@@ -32,15 +29,17 @@ public class RegistrationDAO {
             
             if (conn.isValid(0)) {
                 
-                 // Prepare the SQL statement to insert a new registration
-                ps = conn.prepareStatement(QUERY_REGISTAR);
+                // SQL query to insert a new registration record
+                String QUERY_REGISTER = "INSERT INTO registration (studentid, termid, crn) VALUES (?,?,?)";
+                ps = conn.prepareStatement(QUERY_REGISTER);
+                
+                // Set the parameters for the query
                 ps.setInt(1, studentid);
                 ps.setInt(2, termid);
                 ps.setInt(3, crn);
                 
-                // Execute the update and check if any rows were affected
-                int affectedRows = ps.executeUpdate();
-                result = (affectedRows > 0); // If one or more rows were inserted, return true
+                // Execute the update (INSERT) and check if a row was affected
+                result = ps.executeUpdate() > 0;
                 
             }
             
@@ -71,14 +70,17 @@ public class RegistrationDAO {
             
             if (conn.isValid(0)) {
                 
-                // Prepare the SQL statement to delete a registration
+                // SQL query to delete the registration record
+                String QUERY_DROP = "DELETE FROM registration WHERE studentid = ? AND termid = ? AND crn = ?";
                 ps = conn.prepareStatement(QUERY_DROP);
+                
+                // Set the parameters for the query
                 ps.setInt(1, studentid);
                 ps.setInt(2, termid);
                 ps.setInt(3, crn);
                 
-                // Execute the update and check if any rows were deleted
-                result = ps.executeUpdate() > 0; 
+                 // Execute the update (DELETE) and check if a row was affected
+                result = ps.executeUpdate() > 0;
             }
             
         }
@@ -107,12 +109,15 @@ public class RegistrationDAO {
             
             if (conn.isValid(0)) {
                 
-                // Prepare the SQL statement to delete all registrations for a term
+                // SQL query to delete all registrations for the student in the given term
+                String QUARY_WITHDRAW = "DELETE FROM registration WHERE termid = ? AND studentid = ?";
                 ps = conn.prepareStatement(QUARY_WITHDRAW);
+                
+                // Set the parameters for the query 
                 ps.setInt(1, studentid);
                 ps.setInt(2, termid);
                 
-                // Execute the update and check if any rows were deleted
+                // Execute the update (DELETE) and check if rows were affected
                 result = ps.executeUpdate() > 0;
             }
             
@@ -145,14 +150,18 @@ public class RegistrationDAO {
             
             if (conn.isValid(0)) {
                 
-                /* Prepare the SQL statement to retrieve the registrations*/
+                //SQL query to fetch the list of registrations for the student in the given term
+                String QUERY_LISTING = "SELECT * FROM registration WHERE studentid = ? AND termid = ? ORDER BY crn";
                 ps = conn.prepareStatement(QUERY_LISTING);
+                
+                //Set the parameters for the query
                 ps.setInt(1, studentid);
                 ps.setInt(2, termid);
                 
-                rs = ps.executeQuery(); // Execute the query
+                //Execute the query (SELECT)
+                rs = ps.executeQuery();
                 
-                // Convert the ResultSet into a JSON string
+                //Convert the ResultSet into JSON format using a utility class
                 result = DAOUtility.getResultSetAsJson(rs);
                
                 

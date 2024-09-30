@@ -128,7 +128,7 @@ public class RegistrationDAO {
 
     public String list(int studentid, int termid) {
         
-        //StringBuilder result = new StringBuilder();
+        
         String result = null;
         
         PreparedStatement ps = null;

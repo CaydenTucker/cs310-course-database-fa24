@@ -145,7 +145,7 @@ public class RegistrationDAO {
             
             if (conn.isValid(0)) {
                 
-                 // Prepare the SQL statement to retrieve the registrations
+                /* Prepare the SQL statement to retrieve the registrations*/
                 ps = conn.prepareStatement(QUERY_LISTING);
                 ps.setInt(1, studentid);
                 ps.setInt(2, termid);

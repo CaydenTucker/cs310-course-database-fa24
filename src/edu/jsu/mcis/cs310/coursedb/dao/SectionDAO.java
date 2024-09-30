@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
-import com.github.cliftonlabs.json_simple.JsonArray;
-import com.github.cliftonlabs.json_simple.JsonObject;
 
 public class SectionDAO {
     
@@ -20,6 +18,7 @@ public class SectionDAO {
     public String find(int termid, String subjectid, String num) {
         
         String result = "[]";
+        //JsonArray sectionsArray = new JsonArray();
         
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -38,12 +37,12 @@ public class SectionDAO {
                 
                 rs = ps.executeQuery();
                 
-                JsonArray sectionsArray = new JsonArray();
+                //JsonArray sectionsArray = new JsonArray();
                 
-                rsmd = rs.getMetaData();
-                int columnCount = rsmd.getColumnCount();
+                //rsmd = rs.getMetaData();
+                //int columnCount = rsmd.getColumnCount();
                 
-                while (rs.next()){
+                /*while (rs.next()){
                     
                     JsonObject sectionObj = new JsonObject();
                     
@@ -54,9 +53,9 @@ public class SectionDAO {
                     }
                     
                     sectionsArray.add(sectionObj);
-                }
+                }*/
                 
-                result = sectionsArray.toString();
+                result = DAOUtility.getResultSetAsJson(rs);
                 
             }
             

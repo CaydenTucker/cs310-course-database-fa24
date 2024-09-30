@@ -30,13 +30,16 @@ public class SectionDAO {
             
             if (conn.isValid(0)) {
                 
+                // Prepare the SQL query with the provided parameters
                 ps = conn.prepareStatement(QUERY_FIND);
                 ps.setInt(1, termid);
                 ps.setString(2, subjectid);
                 ps.setString(3, num);
                 
+                // Execute the query
                 rs = ps.executeQuery();
                 
+                // Convert the ResultSet to JSON format using DAOUtility
                 result = DAOUtility.getResultSetAsJson(rs);
                 
             }

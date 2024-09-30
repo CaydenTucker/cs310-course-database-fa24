@@ -25,12 +25,11 @@ public class DAOUtility {
                     
                     /* Create a JSON object for each row*/
                     JsonObject record = new JsonObject();
-                    
+                        
                     for (int i = 1; i <= columnCount; i++){
                         String columnName = rsmd.getColumnName(i); // Get column name
                         Object columnValue  = rs.getObject(i); // Get the value from the current row at the current column
-                        
-                        // Convert the column value to a string if not null, otherwise store null
+                       
                         record.put(columnName, columnValue != null ? columnValue.toString() : null);
                        
                     }

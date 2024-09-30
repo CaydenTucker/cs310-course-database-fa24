@@ -32,13 +32,15 @@ public class RegistrationDAO {
             
             if (conn.isValid(0)) {
                 
+                 // Prepare the SQL statement to insert a new registration
                 ps = conn.prepareStatement(QUERY_REGISTAR);
                 ps.setInt(1, studentid);
                 ps.setInt(2, termid);
                 ps.setInt(3, crn);
                 
+                // Execute the update and check if any rows were affected
                 int affectedRows = ps.executeUpdate();
-                result = (affectedRows > 0);
+                result = (affectedRows > 0); // If one or more rows were inserted, return true
                 
             }
             
@@ -69,12 +71,13 @@ public class RegistrationDAO {
             
             if (conn.isValid(0)) {
                 
-                
+                // Prepare the SQL statement to delete a registration
                 ps = conn.prepareStatement(QUERY_DROP);
                 ps.setInt(1, studentid);
                 ps.setInt(2, termid);
                 ps.setInt(3, crn);
                 
+                // Execute the update and check if any rows were deleted
                 result = ps.executeUpdate() > 0; 
             }
             
@@ -104,11 +107,12 @@ public class RegistrationDAO {
             
             if (conn.isValid(0)) {
                 
-                
+                // Prepare the SQL statement to delete all registrations for a term
                 ps = conn.prepareStatement(QUARY_WITHDRAW);
                 ps.setInt(1, studentid);
                 ps.setInt(2, termid);
                 
+                // Execute the update and check if any rows were deleted
                 result = ps.executeUpdate() > 0;
             }
             
@@ -141,14 +145,14 @@ public class RegistrationDAO {
             
             if (conn.isValid(0)) {
                 
-                
+                 // Prepare the SQL statement to retrieve the registrations
                 ps = conn.prepareStatement(QUERY_LISTING);
                 ps.setInt(1, studentid);
                 ps.setInt(2, termid);
                 
-                rs = ps.executeQuery();
+                rs = ps.executeQuery(); // Execute the query
                 
-                
+                // Convert the ResultSet into a JSON string
                 result = DAOUtility.getResultSetAsJson(rs);
                
                 

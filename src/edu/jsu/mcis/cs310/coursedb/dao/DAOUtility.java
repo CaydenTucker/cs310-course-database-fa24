@@ -20,38 +20,20 @@ public class DAOUtility {
                 ResultSetMetaData rsmd = rs.getMetaData();
                 int columnCount = rsmd.getColumnCount();
                 
-                //ArrayList<ArrayList<Object>> allRows = new ArrayList();
                 
                 while (rs.next()){
                     JsonObject record = new JsonObject();
                     
                     for (int i = 1; i <= columnCount; i++){
-                        String columnKey = rsmd.getColumnName(i);
+                        String columnName = rsmd.getColumnName(i);
                         Object columnValue  = rs.getObject(i);
-                        
-                        
-                        record.put(columnKey, columnValue);
+                        record.put(columnName, columnValue != null ? columnValue.toString() : null);
+                       
                     }
                     
                     records.add(record);
                 }
                 
-                /*for (ArrayList<Object> row : allRows){
-                    JsonObject record = new JsonObject();
-                    
-                    for (int i = 0; i < columnCount; i++){
-                        String columnName = rsmd.getColumnName(i);
-                        Object columnValue = row.get(i);
-                        
-                        if (columnValue == null){
-                            record.put(columnName, null);
-                        } else {
-                            record.put(columnName, columnValue);
-                        }
-                    }
-                    
-                    records.add(record);
-                }*/
             }
             
         }

@@ -10,6 +10,11 @@ public class RegistrationDAO {
     
     private final DAOFactory daoFactory;
     
+    private static final String QUERY_REGISTAR = "INSERT INTO REGISTRATIONS (studentid, termid, crn) VALUES (?, ?, ?)";
+    private static final String QUERY_DROP = "DELETE FROM refistrations WHERE studentid = ? AND termid = ? AND crn = ?";
+    private static final String QUARY_WITHDRAW = "DELETE FROM registrations WHERE studentid = ? AND termid = ?";
+    private static final String QUERY_LISTING = "SELECT * FROM registrations WHERE studentid = ? AND termid = ?";
+    
     RegistrationDAO(DAOFactory daoFactory) {
         this.daoFactory = daoFactory;
     }
@@ -27,8 +32,7 @@ public class RegistrationDAO {
             
             if (conn.isValid(0)) {
                 
-                String sql = "INSERT INTO REGISTRATIONS (studentid, termid, crn) VALUES (?, ?, ?)";
-                ps = conn.prepareStatement(sql);
+                ps = conn.prepareStatement(QUERY_REGISTAR);
                 ps.setInt(1, studentid);
                 ps.setInt(2, termid);
                 ps.setInt(3, crn);
@@ -65,8 +69,8 @@ public class RegistrationDAO {
             
             if (conn.isValid(0)) {
                 
-                String sql = "DELETE FROM refistrations WHERE studentid = ? AND termid = ? AND crn = ?";
-                ps = conn.prepareStatement(sql);
+                
+                ps = conn.prepareStatement(QUERY_DROP);
                 ps.setInt(1, studentid);
                 ps.setInt(2, termid);
                 ps.setInt(3, crn);
@@ -102,8 +106,8 @@ public class RegistrationDAO {
             
             if (conn.isValid(0)) {
                 
-                String sql = "DELETE FROM registrations WHERE studentid = ? AND termid = ?";
-                ps = conn.prepareStatement(sql);
+                
+                ps = conn.prepareStatement(QUARY_WITHDRAW);
                 ps.setInt(1, studentid);
                 ps.setInt(2, termid);
                 
@@ -127,7 +131,8 @@ public class RegistrationDAO {
 
     public String list(int studentid, int termid) {
         
-        StringBuilder result = new StringBuilder();
+        //StringBuilder result = new StringBuilder();
+        String result = null;
         
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -139,16 +144,18 @@ public class RegistrationDAO {
             
             if (conn.isValid(0)) {
                 
-                String sql = "SELECT * FROM registrations WHERE studentid = ? AND termid = ?";
-                ps = conn.prepareStatement(sql);
+                
+                ps = conn.prepareStatement(QUERY_LISTING);
                 ps.setInt(1, studentid);
                 ps.setInt(2, termid);
                 
                 rs = ps.executeQuery();
-                rsmd = rs.getMetaData();
-                int columnCount = rsmd.getColumnCount();
+                //rsmd = rs.getMetaData();
                 
-                while (rs.next()){
+                result = DAOUtility.getResultSetAsJson(rs);
+                //int columnCount = rsmd.getColumnCount();
+                
+                /*while (rs.next()){
                     for (int i = 1; i <= columnCount; i++) {
                         result.append(rsmd.getColumnName(i))
                                 .append(": ")
@@ -156,7 +163,7 @@ public class RegistrationDAO {
                                 .append(", ");
                     }
                     result.append("\n");
-                }
+                }*/
                 
                 
             }
@@ -172,7 +179,7 @@ public class RegistrationDAO {
             
         }
         
-        return result.toString();
+        return result;
         
     }
     

@@ -23,7 +23,7 @@ public class DAOUtility {
                 
                 while (rs.next()){
                     
-                    // Create a JSON object for each row
+                    /* Create a JSON object for each row*/
                     JsonObject record = new JsonObject();
                     
                     for (int i = 1; i <= columnCount; i++){

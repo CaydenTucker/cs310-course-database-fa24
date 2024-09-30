@@ -18,7 +18,7 @@ public class SectionDAO {
     public String find(int termid, String subjectid, String num) {
         
         String result = "[]";
-        //JsonArray sectionsArray = new JsonArray();
+        
         
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -30,7 +30,7 @@ public class SectionDAO {
             
             if (conn.isValid(0)) {
                 
-                // Prepare the SQL query with the provided parameters
+                /* Prepare the SQL query with the provided parameters*/
                 ps = conn.prepareStatement(QUERY_FIND);
                 ps.setInt(1, termid);
                 ps.setString(2, subjectid);
